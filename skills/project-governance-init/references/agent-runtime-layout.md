@@ -1,6 +1,23 @@
 # Agent Runtime Layout
 
-The canonical governance source should live in the repository's chosen governance directory. Runtime entrypoints should point back to it.
+The canonical governance source should live in the repository's chosen governance directory. Runtime entrypoints and runtime agent prompts should point back to it.
+
+## Canonical Agent Definitions
+
+Recommended:
+
+```text
+project/governance/agents/main-agent.md
+project/governance/agents/product-role.md
+project/governance/agents/spec-role.md
+project/governance/agents/architect-role.md
+project/governance/agents/implementation-role.md
+project/governance/agents/qa-role.md
+project/governance/agents/uiux-role.md
+project/governance/agents/closure-role.md
+```
+
+These files are the repository-level role definitions for the owner -> main-agent -> subagents model. They should define responsibilities, boundaries, allowed stages, evidence expectations, and handoff rules. Runtime-specific agent files can adapt formatting, but they must not become competing sources of truth.
 
 ## Codex
 
@@ -39,7 +56,22 @@ Each command should read:
 2. canonical skill
 3. current work item state when applicable
 
-If `.claude/` is ignored, add narrow allow rules for `.claude/commands/*.md` only.
+Recommended agent runtime files:
+
+```text
+.claude/agents/main-agent.md
+.claude/agents/product-role.md
+.claude/agents/spec-role.md
+.claude/agents/architect-role.md
+.claude/agents/implementation-role.md
+.claude/agents/qa-role.md
+.claude/agents/uiux-role.md
+.claude/agents/closure-role.md
+```
+
+Each runtime agent file should be a thin role prompt derived from `project/governance/agents/<role>.md` and should preserve the governance constraints for state ownership, assigned paths, stage gates, and evidence.
+
+If `.claude/` is ignored, add narrow allow rules for `.claude/commands/*.md` and `.claude/agents/*.md` only.
 
 ## Other Agents
 
@@ -47,9 +79,10 @@ Prefer a thin runtime command or instruction file that points to the canonical g
 
 ## Sync Rule
 
-When canonical skills change:
+When canonical skills or agent definitions change:
 
 1. update `project/governance/skills/**`
-2. sync runtime copies or commands
-3. verify source-of-truth headers
-4. keep private local runtime files ignored
+2. update `project/governance/agents/**` when role behavior changes
+3. sync runtime copies, commands, or agent prompts
+4. verify source-of-truth headers or role mapping notes
+5. keep private local runtime files ignored

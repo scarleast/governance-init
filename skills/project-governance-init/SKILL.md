@@ -14,11 +14,12 @@ Do not assume the target project must copy this repository exactly. Preserve use
 
 ## Core Model
 
-Install three layers:
+Install four layers:
 
 ```text
 contracts = law
 project-local skills = execution manuals
+agent definitions = role prompts and handoff boundaries
 runtime entrypoints = agent triggers
 ```
 
@@ -28,9 +29,11 @@ Recommended default directories:
 project/governance/contracts/
 project/governance/templates/
 project/governance/skills/
+project/governance/agents/
 project/work/
 .codex/skills/
 .claude/commands/
+.claude/agents/
 AGENTS.md
 ```
 
@@ -43,7 +46,7 @@ These paths are defaults, not mandates. Existing repositories may use `docs/`, `
 Use the scaffold path when the repository is empty or the owner is starting a new project:
 
 1. Ask for project type, stack, package manager, agent runtimes, and strictness mode.
-2. Generate governance contracts, templates, work index, runtime entries, and root guidance.
+2. Generate governance contracts, templates, agent definitions, work index, runtime entries, and root guidance.
 3. Create the first work item for adopting governance.
 4. Record stack-specific checks.
 5. Verify the generated file layout.
@@ -95,6 +98,7 @@ For a new project, produce:
 - selected paths
 - selected runtimes
 - stack check commands
+- generated or adapted subagent definitions
 - generated file list
 - first governance work item
 - verification results
@@ -105,6 +109,7 @@ For an existing project, produce before applying:
 - recommended mode
 - proposed control-plane and execution-plane boundaries
 - proposed check commands
+- proposed subagent definitions and runtime mapping
 - files to create
 - files to modify
 - risks and conflicts
