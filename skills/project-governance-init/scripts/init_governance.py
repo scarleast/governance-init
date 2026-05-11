@@ -8,8 +8,8 @@ import shutil
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-TEMPLATES = ROOT / "templates"
+SKILL_ROOT = Path(__file__).resolve().parents[1]
+TEMPLATES = SKILL_ROOT / "assets" / "templates"
 
 
 def copytree(src: Path, dst: Path, overwrite: bool) -> None:
@@ -27,12 +27,25 @@ def copy_file(src: Path, dst: Path, overwrite: bool) -> None:
     shutil.copy2(src, dst)
 
 
+def rewrite_codex_runtime_header(skill_file: Path, skill_name: str) -> None:
+    if not skill_file.exists():
+        return
+    text = skill_file.read_text(encoding="utf-8")
+    text = text.replace(
+        "<!-- SOURCE OF TRUTH: This file is the authoritative version. -->",
+        f"<!-- SOURCE OF TRUTH: project/governance/skills/{skill_name}/SKILL.md -->",
+    )
+    skill_file.write_text(text, encoding="utf-8")
+
+
 def install_runtime(root: Path, runtime: str, overwrite: bool) -> None:
     if runtime == "codex":
         skills_src = TEMPLATES / "skills"
         for skill_dir in skills_src.iterdir():
             if skill_dir.is_dir():
-                copytree(skill_dir, root / ".codex" / "skills" / skill_dir.name, overwrite)
+                runtime_dir = root / ".codex" / "skills" / skill_dir.name
+                copytree(skill_dir, runtime_dir, overwrite)
+                rewrite_codex_runtime_header(runtime_dir / "SKILL.md", skill_dir.name)
     elif runtime == "claude":
         commands = TEMPLATES / "runtime" / "claude" / "commands"
         copytree(commands, root / ".claude" / "commands", overwrite)

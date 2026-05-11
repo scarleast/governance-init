@@ -78,12 +78,14 @@ For old projects, inspect first and then present recommendations instead of aski
 
 ## References
 
-Load only the reference needed for the current situation:
+Load only the reference needed for the current situation. Bundled templates live in `assets/templates/`, and deterministic helpers live in `scripts/`:
 
 - New vs existing flow and modes: `references/modes.md`
 - Stack-specific check presets: `references/stack-presets.md`
 - Runtime entrypoint layouts: `references/agent-runtime-layout.md`
 - Existing project audit procedure: `references/existing-project-audit.md`
+- Template assets: `assets/templates/`
+- Helper scripts: `scripts/audit_project.py`, `scripts/init_governance.py`, `scripts/check_sync.py`
 
 ## Output Contract
 
